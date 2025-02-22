@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #616161;
+        }
+        .wifi-card {
+            background: rgb(255, 255, 255);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .wifi-card h2 {
+            margin-bottom: 10px;
+        }
+        #qrcode {
+            margin: 10px auto;
+            padding: 10px;
+            background: white;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .info {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="wifi-card">
+        <h2>បង្កើត Wifi QR Code</h2>
+        <div id="qrcode"></div>
+        <h2>នេះជាQRរបស់អ្នក</h2>
+        <input type="text" id="ssid" placeholder="ឈ្មោះ Wifi Network">
+        <input type="password" id="password" placeholder="ពាក្យសម្ងាត់ Wifi Network របស់អ្នក">
+        <p class="info">📷 សូមប្រាកដថាទូរស័ព្ទរបស់អ្នកបើកCameraដើម្បីភ្ជាប់ទៅនិងWiFi</p>
+        <button class="btn">បញ្ចេញកាត Wifi របស់អ្នក</button>
+    </div>
+
+    <script>
+        let qrCode = new QRCode(document.getElementById("qrcode"), {
+            text: "",
+            width: 128,
+            height: 128
+        });
+
+        function updateQRCode() {
+            let ssid = document.getElementById("ssid").value;
+            let password = document.getElementById("password").value;
+            let wifiString = `WIFI:S:${ssid};T:WPA;P:${password};;`;
+
+            qrCode.makeCode(wifiString);
+        }
+
+        document.getElementById("ssid").addEventListener("input", updateQRCode);
+        document.getElementById("password").addEventListener("input", updateQRCode);
+    </script>
+</body>
+</html>
